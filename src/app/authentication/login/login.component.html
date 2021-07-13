@@ -1,0 +1,32 @@
+<form [formGroup]="loginModel">
+	<div>
+		<div class="row">
+			<div *ngIf="serverError != ''" class="col">{{serverError}}</div>
+			<div class="form-group col">
+				<label>UserName:</label> <span> <input type="text"
+					class="form-control" id="userName" name="userName" formControlName="userName">
+				</span>
+			</div>
+			<div  *ngIf="getControl.userName.invalid && (getControl.userName.dirty || getControl.userName.touched)" class="alert alert-danger">
+				<div *ngIf="getControl.userName.errors?.required">Username is required.</div>
+				<!-- <div *ngIf="userName.errors?.minlength">Name must be at least
+					4 characters long.</div>
+				<div *ngIf="userName.errors?.forbiddenName">Name cannot be
+					Bob.</div> -->
+			</div>
+			<div class="form-group col">
+				<label>Password:</label> <span> <input type="password"
+					class="form-control" id="password" name="password" formControlName="password">
+				</span>
+			</div>
+			<div *ngIf="getControl.password.invalid && (getControl.password.dirty || getControl.password.touched)" class="alert alert-danger">
+				<div *ngIf="getControl.password.errors?.required">Password is required.</div>				
+			</div>
+		</div>
+	</div>
+	
+	<div class="no-css">
+		<button type="submit" (click)="login()">Login</button>
+	</div>
+</form>
+

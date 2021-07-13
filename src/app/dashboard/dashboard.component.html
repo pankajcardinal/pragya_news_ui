@@ -1,0 +1,25 @@
+<div>
+	<div>
+		<img src="{{news?.image.url}}" title="{{news?.image.title}}"/>
+	</div>
+	<ul>
+		<li *ngFor="let n of news?.item">
+			<a href="{{n.link}}" target="_blank">{{n.title}}</a>
+		</li>
+	</ul>
+</div>
+
+<ng-template #mymodal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Pragya News</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <iframe  src="{{newsLink}}" type="text/html"></iframe>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
+  </div>
+</ng-template>
