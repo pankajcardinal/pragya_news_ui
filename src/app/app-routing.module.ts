@@ -25,6 +25,16 @@ const routes: Routes = [
 		]
 	},
 	{
+		path: 'admin/bulkupdateusers',
+		children: [
+			{
+				path: '',
+				pathMatch: 'full',
+				loadChildren: () => import('./bulkupdateusers/bulkupdateusers.module').then(s => s.BulkupdateusersModule)					
+			}
+		]
+	},
+	{
 		path: 'dashboard',
 		canActivate: [DashboardGuard],
 		children: [

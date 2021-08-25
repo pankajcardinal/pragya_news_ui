@@ -7,7 +7,10 @@ import { LoginRoutingModule } from './login.routing';
 @NgModule({
   declarations: [LoginComponent],
   imports: [
-    CommonModule, FormsModule, ReactiveFormsModule, LoginRoutingModule
+    CommonModule,
+    FormsModule, 
+    ReactiveFormsModule, 
+    LoginRoutingModule
   ]
 })
 export class LoginModule { }

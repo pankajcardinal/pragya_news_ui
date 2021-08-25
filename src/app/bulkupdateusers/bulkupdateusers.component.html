@@ -1,15 +1,113 @@
+<form [formGroup]="parentsForm" style="margin-bottom: 0px;">
+	<section class="new-fp-add">
+		<table class="data-table-grid">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Phone #</th>
+					<th style="min-width: 162px;">Email</th>
+					<th class="lng-head">Home Language</th>
+					<th style="width: 5px;"></th>
+				</tr>
+			</thead>
+			<tbody id="Table0" formArrayName="parents" style="opacity: 0;"
+				[ngStyle]="{'overflow':parents.length < 6 ? 'inherit' : 'auto', 'padding-left': parents.length < 6 ? '14px' : '10px'}">
+				<tr *ngFor="let fp of parents.controls; let i = index"
+					[formGroupName]="i">
+					<td><a tabindex="-1" href="javascript:void(0)"
+						(click)="removeParent(fp, i)"> <img alt=""
+							src="/Content/assets/images/delete_com_on_phone.png" />
+					</a></td>
+
+					<td><multiselect-dropdown
+							tabindex="{{5 + fp.controls.TabIndex.value}}"
+							[options]="languageOptions"
+							[defaultmodelsingle]="fp.controls.Language.value"
+							[settings]="{multiSelect:false,closeOnSelect:true}"
+							[texts]="{defaultTitle:'English'}"
+							(selectedmodel)="handleDropdownChange($event, fp)"></multiselect-dropdown>
+					</td>
+
+					<td
+						[ngClass]="{'validate-error': (fp.controls.Email.errors?.required || fp.controls.Email.errors?.email)}">
+						<input class="family-partner-nmbr email-input"
+						*ngIf="fp.controls.IsEmailEdit.value"
+						tabindex="{{4 + fp.controls.TabIndex.value}}"
+						formControlName="Email" name="Email" type="text"
+						placeholder="Email" />
+
+						<div
+							*ngIf="(!fp.controls.IsEmailEdit.value && fp.controls.Email.value != '')"
+							style="display: flex;">
+							<span class="email-box">{{fp.controls.Email.value}}</span> <a
+								href="javascript:void(0)" class="edit-phone-link"
+								(click)="edit(fp, 'Email')"> <img alt=""
+								src="/Content/assets/images/edit_phone_icon.png" />
+							</a>
+						</div>
+					</td>
+					<td
+						[ngClass]="{'validate-error': (fp.controls.Phone.errors?.required || fp.controls.Phone.errors?.pattern)}"
+						style="min-width: 104px;"><input class="family-partner-nmbr"
+						*ngIf="fp.controls.IsPhoneEdit.value" formControlName="Phone"
+						tabindex="{{3 + fp.controls.TabIndex.value}}"
+						(keyup)="formatPhoneNumber(fp)" name="Phone" type="text"
+						placeholder="xxx-xxx-xxxx" />
+
+						<div
+							*ngIf="(!fp.controls.IsPhoneEdit.value && fp.controls.Phone.value != '')"
+							style="width: 105px;">
+							{{fp.controls.Phone.value}} <a href="javascript:void(0)"
+								class="edit-phone-link" (click)="edit(fp, 'Phone')"> <img
+								alt="" src="/Content/assets/images/edit_phone_icon.png" />
+							</a>
+						</div></td>
+					<td class="parent-name-list"><input
+						*ngIf="fp.controls.IsNameEdit.value" class="family-partner-nmbr"
+						maxlength="25"
+						[ngClass]="{'validate-error': (fp.controls.FirstName.errors?.required)}"
+						tabindex="{{1 + fp.controls.TabIndex.value}}"
+						formControlName="FirstName" name="FirstName" type="text"
+						placeholder="First Name" /> <input
+						*ngIf="fp.controls.IsNameEdit.value"
+						class="family-partner-nmbr last-name-inp" maxlength="25"
+						[ngClass]="{'validate-error': (fp.controls.LastName.errors?.required)}"
+						tabindex="{{2 + fp.controls.TabIndex.value}}"
+						formControlName="LastName" name="LastName" type="text"
+						placeholder="Last Name" />
+
+						<div
+							*ngIf="(!fp.controls.IsNameEdit.value && fp.controls.FirstName.value != '' && fp.controls.FirstName.value != '')">
+							<span class="fp-name-elps"> {{fp.controls.FirstName.value
+								+ ' ' + fp.controls.LastName.value}}</span> <a
+								href="javascript:void(0)" class="edit-phone-link"
+								(click)="edit(fp, 'Name')"> <img alt=""
+								src="/Content/assets/images/edit_phone_icon.png" />
+							</a>
+						</div></td>
+				</tr>
+			</tbody>
+
+		</table>
+
+	</section>
+
+</form>
+
+
+
+
 <form [formGroup]="signupForm">
 	<div>
 		<div *ngIf="serverError != ''" class="col">{{serverError}}</div>
 		<div class="row">
 			<div class="form-group">
 				<div class="col">
-					<label>UserName:</label> 
+					<label>UserName:</label>
 				</div>
 				<div class="col">
-					<span> <input type="text"
-					class="form-control" id="userName" name="userName"
-					formControlName="userName">
+					<span> <input type="text" class="form-control" id="userName"
+						name="userName" formControlName="userName">
 					</span>
 				</div>
 				<div
@@ -20,7 +118,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="row">
 			<div class="form-group col">
 				<label>Password:</label> <span> <input type="password"
@@ -35,7 +133,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="row">
 			<div class="form-group col">
 				<label>Email:</label> <span> <input type="text"
@@ -52,7 +150,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="row">
 			<div class="form-group col">
 				<label>Phone:</label> <span> <input type="text"
@@ -69,7 +167,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="row">
 			<div class="form-group col">
 				<label>First Name:</label> <span> <input type="text"
@@ -84,7 +182,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="row">
 			<div class="form-group col">
 				<label>lastName:</label> <span> <input type="text"
@@ -99,7 +197,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="row">
 			<div class="form-group col">
 				<label>Date Of Birth:</label> <span> <input type="date"
@@ -114,17 +212,19 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="row">
 			<div class="form-group col">
-				<label>Gender:</label> 
+				<label>Gender:</label>
 				<div class="custom-control custom-radio custom-control-inline">
-					<input type="radio" class="custom-control-input" id="sex1" name="gender" value="male" formControlName="gender">  					
-  					<label class="custom-control-label" for="sex1">Male</label>
+					<input type="radio" class="custom-control-input" id="sex1"
+						name="gender" value="male" formControlName="gender"> <label
+						class="custom-control-label" for="sex1">Male</label>
 				</div>
 				<div class="custom-control custom-radio custom-control-inline">
-					<input type="radio" class="custom-control-input" id="sex2" name="gender" value="female" formControlName="gender">  					
-  					<label class="custom-control-label" for="sex1">Female</label>
+					<input type="radio" class="custom-control-input" id="sex2"
+						name="gender" value="female" formControlName="gender"> <label
+						class="custom-control-label" for="sex1">Female</label>
 				</div>
 				<div
 					*ngIf="getControl.gender.invalid && (getControl.gender.dirty || getControl.gender.touched)"
@@ -152,7 +252,8 @@
 		</div>
 		<div class="row">
 			<div class="form-group col">
-				<label>State:</label> <span> <select formControlName="state" class="custom-select">
+				<label>State:</label> <span> <select formControlName="state"
+					class="custom-select">
 						<option [ngValue]="null" disabled>Select State</option>
 						<option *ngFor="let state of states" [ngValue]="state">{{state}}</option>
 				</select>

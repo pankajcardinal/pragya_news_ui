@@ -5,12 +5,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DashboardModule } from './dashboard/dashboard.module';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
 	declarations: [
-		AppComponent
+		AppComponent,  		
 	],
 	imports: [
 		BrowserModule,
@@ -19,7 +20,7 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
 		FormsModule,
 		ReactiveFormsModule,
 		NgbModule,
-		DashboardModule
+		BrowserAnimationsModule
 	],
 	providers: [{
     	provide: HTTP_INTERCEPTORS, 

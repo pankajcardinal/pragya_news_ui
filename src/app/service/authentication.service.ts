@@ -37,7 +37,7 @@ export class AuthenticationService extends BaseService {
 	}
 
 	signup(params: any, callback: (r: object) => void): void {
-		this.sendHttpPostAjaxRequest('/anonymous/signup', params).subscribe(
+		this.sendHttpPostAjaxRequest('/anonymous/registerUser', params).subscribe(
 			result => {
 				if (typeof callback === 'function') {
 					callback({ status: true, data: result });
